@@ -1,0 +1,5 @@
+build/
+build.zip
+download.zip
+.env
+ipfs-upload-client

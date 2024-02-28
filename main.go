@@ -17,25 +17,25 @@ import (
 	flag "github.com/spf13/pflag"
 )
 
-const infuraAPI = "https://ipfs.infura.io:5001"
+// const infuraAPI = "https://ipfs.infura.io:5001";
 
 func main() {
-	projectId := flag.String("id", "", "your Infura ProjectID")
-	projectSecret := flag.String("secret", "", "your Infura ProjectSecret")
-	api := flag.String("url", infuraAPI, "the API URL")
+	// projectId := flag.String("id", "", "your Infura ProjectID")
+	// projectSecret := flag.String("secret", "", "your Infura ProjectSecret")
+	api := flag.String("url", os.Getenv("API"), "the API URL")
 	pin := flag.Bool("pin", true, "whether or not to pin the data")
 	verbose := flag.Bool("verbose", false, "whether or not to print full upload information")
 
 	flag.Parse()
 
-	if *projectId == "" {
-		_, _ = fmt.Fprintln(os.Stderr, "parameter --id is required")
-		os.Exit(1)
-	}
-	if *projectSecret == "" {
-		_, _ = fmt.Fprintln(os.Stderr, "parameter --secret is required")
-		os.Exit(1)
-	}
+	// if *projectId == "" {
+	// 	_, _ = fmt.Fprintln(os.Stderr, "parameter --id is required")
+	// 	os.Exit(1)
+	// }
+	// if *projectSecret == "" {
+	// 	_, _ = fmt.Fprintln(os.Stderr, "parameter --secret is required")
+	// 	os.Exit(1)
+	// }
 
 	httpClient := &http.Client{}
 	client, err := httpapi.NewURLApiWithClient(*api, httpClient)
@@ -43,7 +43,7 @@ func main() {
 		_, _ = fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-	client.Headers.Add("Authorization", "Basic "+basicAuth(*projectId, *projectSecret))
+	// client.Headers.Add("Authorization", "Basic "+basicAuth(*projectId, *projectSecret))
 
 	args := flag.Args()
 	if len(args) != 1 {

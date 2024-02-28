@@ -1,18 +1,41 @@
 `ipfs-upload-client` is a minimal CLI tool to upload files or directories to Infura's IPFS or another API endpoint.
 
-## Example
+## Setup
 
-`ipfs-upload-client --id xxxxx --secret yyyyy /path/to/data`
+1. Create .env file with the correct URL of the IPFS you want to use:
 
-## Installation
-
-Pre-compiled binaries are available in the [latest release page](https://github.com/INFURA/ipfs-upload-client/releases/latest).
-
-## Options
 ```
-  --id string       your Infura ProjectID
-  --pin             whether or not to pin the data (default true)
-  --secret string   your Infura ProjectSecret
-  --url string      the API URL (default "https://ipfs.infura.io:5001")
-  --verbose         whether or not to print full upload information (default false)
+API=http://localhost:5002
 ```
+
+2. Set the env vars:
+
+```
+set -a && source .env && set +a
+```
+
+3. Compile and generate exe file:
+
+```
+go build
+```
+
+## How to run
+
+1. Get the build.zip file and paste it on the root then run:
+
+```
+ipfs-upload-client ./build.zip
+```
+
+## Check if it was successful uploaded
+
+1. Run the following command replacing the CID on the arg= :
+
+```
+curl "http://poc-subgraph.regtoken.io:5002/api/v0/cat?arg=QmTnTHWqRp78Vcxn5fVwEUM3CNtxnyaWxAfYV3UySRcCTr" \
+    -X POST \
+    --output download.zip
+```
+
+2. Unzip download.zip and check the addresses matches
